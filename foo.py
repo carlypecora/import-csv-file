@@ -6,9 +6,7 @@ NEW_CSV_LIST = []
 def reformat_csv(csv_filename):
     with open(csv_filename, "r") as f:
         readable_csv = csv.reader(f)
-        # print('READABLE `{}`'.format(list(readable_csv)))
         header = next(readable_csv)
-        print(header)
         beginning_range_index = 9
         ending_range_index = 24
         i = 0
@@ -16,7 +14,10 @@ def reformat_csv(csv_filename):
             # print('ROW `{}`'.format(row))
             # str_list = list(filter(None, str_list))
             j = 0
-            for shoe_size_quantity in row[9:24]:
+            size_rows = row[9:23]
+            for x, shoe_size_quantity in enumerate(size_rows):
+                # print('X {}'.format(x))
+                index = row.index(shoe_size_quantity)
                 try:
                     shoe_size_quantity = int(shoe_size_quantity)
                 except:
@@ -30,9 +31,10 @@ def reformat_csv(csv_filename):
             #     raise TypeError("shoe_size_quantity must be an int. instead it is a `{}`".format(type(shoe_size_quantity)))
                 else:
                     while shoe_size_quantity > 0:
-                        print('MADE IT `{}`'.format(shoe_size_quantity))
-                    #     print('ROW `{}`'.format(header[beginning_range_index]))
-                        # reformat_row(row, header[beginning_range_index])
+                        # print('INDEX {}'.format(index))
+                        # print('MADE IT `{}`'.format(shoe_size_quantity))
+                        # print('ROW `{}`'.format(header[x+9]))
+                        reformat_row(row, header[x + 9])
                         # shoe_size_quantity -= 1
                         shoe_size_quantity -= 1
                 # print('MADE IT `{}`'.format(beginning_range_index))
@@ -43,17 +45,18 @@ def reformat_csv(csv_filename):
                 # shoe_size_quantity = int(shoe_size_quantity)
                 j += 1
                 beginning_range_index += 1 
-                print('JJJJJJJ {} '.format(i)) 
+                # print('JJJJJJJ {} '.format(i)) 
             i += 1
         print(i)
 
 
 def reformat_row(row, shoe_size):
-    print(shoe_size)    
-#     new_row = []
-#     new_row.append(shoe_size)
-#     new_row.append(row[0:j-1]
-#     new_row.append(row[w:])
+    print('SHOE {}'.format(shoe_size))    
+    new_row = []
+    new_row.append(row[0:8])
+    new_row.append(shoe_size)
+    new_row.append(row[24:28])
+    print('new_row {}'.format(new_row))
 #     NEW_CSV_LIST.append(new_row)
 
 
