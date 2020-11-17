@@ -11,53 +11,55 @@ def reformat_csv(csv_filename):
         ending_range_index = 24
         i = 0
         for row in readable_csv:
-            # print('ROW `{}`'.format(row))
-            # str_list = list(filter(None, str_list))
             j = 0
             size_rows = row[9:23]
             for x, shoe_size_quantity in enumerate(size_rows):
-                # print('X {}'.format(x))
                 index = row.index(shoe_size_quantity)
                 try:
                     shoe_size_quantity = int(shoe_size_quantity)
                 except:
-                    # print('Value `{}` is not an integer. continuing to the next entry...'.format(shoe_size_quantity))
                     continue
                 if shoe_size_quantity <= 0:
-                    # print('INVALID QUANTITY `{}`'.format(shoe_size_quantity))
                     print()
-            # elif type(shoe_size_quantity) != int:
-            #     # print('TYPE`{}`'.format(shoe_size_quantity))
-            #     raise TypeError("shoe_size_quantity must be an int. instead it is a `{}`".format(type(shoe_size_quantity)))
                 else:
                     while shoe_size_quantity > 0:
-                        # print('INDEX {}'.format(index))
-                        # print('MADE IT `{}`'.format(shoe_size_quantity))
-                        # print('ROW `{}`'.format(header[x+9]))
                         reformat_row(row, header[x + 9])
-                        # shoe_size_quantity -= 1
                         shoe_size_quantity -= 1
-                # print('MADE IT `{}`'.format(beginning_range_index))
-                # if shoe_size_quantity == None or shoe_size_quantity == '':
-                #     print('VALUE IS `{}`, passing...'.format(shoe_size_quantity))
-                #     # continue
-                #     break
-                # shoe_size_quantity = int(shoe_size_quantity)
                 j += 1
                 beginning_range_index += 1 
-                # print('JJJJJJJ {} '.format(i)) 
             i += 1
         print(i)
+    write_to_csv()
+    tester()
 
 
 def reformat_row(row, shoe_size):
-    print('SHOE {}'.format(shoe_size))    
     new_row = []
-    new_row.append(row[0:8])
-    new_row.append(shoe_size)
-    new_row.append(row[24:28])
-    print('new_row {}'.format(new_row))
-#     NEW_CSV_LIST.append(new_row)
+    new_row.append(row[0:9])
+    new_row.append(row[23:28])
+    asdf = [str(item) for sublist in new_row for item in sublist]
+    asdf.append(shoe_size[4:])
+    asdf = tuple(asdf)
+    NEW_CSV_LIST.append(asdf)
+
+def write_to_csv():
+    with open("test.csv", "wt") as fp:
+        writer = csv.writer(fp, delimiter=",")
+        writer.writerows(NEW_CSV_LIST)
+
+def tester():
+    with open("test.csv", "r") as fp:
+        output_csv = list(csv.reader(fp))
+        with open("ItWorks.csv", "r") as rp:
+            test_csv = list(csv.reader(rp))
+            print('LENGTH')
+            print(len(output_csv)) == len(test_csv)
+            for i, row in enumerate(output_csv):
+                print('ROWS {}'.format(row))
+                print('TEST {}'.format(test_csv[i]))
+                print(row == test_csv[i])
+
+
 
 
 if __name__ == '__main__':
